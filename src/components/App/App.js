@@ -4,14 +4,23 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import SvgIcon from '@mui/material/SvgIcon';
 
+import Slide1 from '../Slide1/Slide1'
+
 const App = () => {
     const [screenWidth, setScreenWidth] = useState(null)
+    const [slide, setSlide] = useState(1)
+    const [max, setMax] = useState(10)
 
     const navigate = (direction) => {
-        const elem = document.getElementById('presentation');
-        const elemW = elem.clientWidth;
-        if (direction === "left") elem.scrollLeft -= elemW;
-        else elem.scrollLeft += elemW;
+        if (direction === "left") {
+            if (slide === 1) setSlide(max)
+            else setSlide(slide - 1)
+        }
+        if (direction === "right") {
+            console.log('right')
+            if (slide === max) setSlide(1)
+            else setSlide(slide + 1)
+        }
     }
 
     useEffect(() => {
@@ -25,22 +34,7 @@ const App = () => {
                 <div className="app-controls left" onClick={() => navigate('left')}><SvgIcon component={ArrowCircleLeftIcon} /></div>
                 <div className="app-row-screen" id='screen'>
                     <div className="app-presentation" id="presentation">
-                        <div className="slide-container">
-                            <div className="slide-inner">
-                                <h1>Royalty</h1>
-                                <h2>Web Applications</h2>
-                            </div>
-                        </div>
-                        <div className="slide-container">
-                            <div clasName="slide-inner">
-                                <h2>Web Applications</h2>
-                            </div>
-                        </div>
-                        <div className="slide-container">
-                            <div clasName="slide-inner">
-                                <h1>test</h1>
-                            </div>
-                        </div>
+                        <Slide1 slide={slide} />
                     </div>
                 </div>
                 <div className="app-controls right" onClick={() => navigate('right')}><SvgIcon component={ArrowCircleRightIcon} /></div>
